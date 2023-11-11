@@ -1,6 +1,10 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -18,6 +22,14 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val localProperties = Properties().apply {
+            val localPropertiesFile = rootProject.file("local.properties")
+            if (localPropertiesFile.exists()) {
+                load(localPropertiesFile.inputStream())
+            }
+        }
+        buildConfigField("String", "API_KEY", "\"${localProperties["api_key"]}\"")
     }
 
     buildTypes {
@@ -34,10 +46,16 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>()
+            .configureEach {
+                kotlinOptions {
+                    jvmTarget = JavaVersion.VERSION_1_8.toString()
+                }
+            }
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -53,7 +71,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation("androidx.activity:activity-compose:1.7.0")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -66,4 +84,13 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    val retrofit_version = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
+    implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
+    implementation("com.squareup.moshi:moshi:1.14.0")
+
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 }

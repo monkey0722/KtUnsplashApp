@@ -1,5 +1,6 @@
-package com.example.ktunsplashapp.di
+package com.example.ktunsplashapp.data.repositories
 
+import com.example.ktunsplashapp.data.remote.PhotoDetailDto
 import com.example.ktunsplashapp.data.remote.SearchPhotosResultDto
 import com.example.ktunsplashapp.data.remote.UnsplashApi
 import com.example.ktunsplashapp.domain.repositories.PhotoRepository
@@ -11,5 +12,9 @@ class PhotoRepositoryImpl @Inject constructor(
 
     override suspend fun searchPhotos(query: String): SearchPhotosResultDto {
         return api.searchPhotos(query)
+    }
+
+    override suspend fun getPhotoById(photoId: String): PhotoDetailDto {
+        return api.getPhotoById(photoId)
     }
 }

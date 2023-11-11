@@ -1,6 +1,7 @@
 package com.example.ktunsplashapp.data.remote
 
 
+import com.example.ktunsplashapp.domain.models.PhotoDetail
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -32,3 +33,17 @@ data class PhotoDetailDto(
     val user: UserX?,
     val width: Int?
 )
+
+fun PhotoDetailDto.toPhotoDetail(): PhotoDetail {
+    val imageUrl = urls?.raw ?: "https://via.placeholder.com/150" // The fallback image is temporary.
+    val locationText = listOfNotNull(location?.city, location?.country).joinToString(", ")
+    return PhotoDetail(
+        description = description,
+        likes = likes,
+        imageUrl = imageUrl,
+        photographer = user?.username,
+        camera = exif?.name,
+        location = locationText.ifEmpty { null },
+        downloads = downloads
+    )
+}

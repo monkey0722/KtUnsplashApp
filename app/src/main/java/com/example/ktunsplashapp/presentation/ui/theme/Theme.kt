@@ -1,4 +1,4 @@
-package com.example.ktunsplashapp.ui.theme
+package com.example.ktunsplashapp.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

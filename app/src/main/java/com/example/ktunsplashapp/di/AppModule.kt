@@ -19,16 +19,25 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideUnsplashApi(): UnsplashApi {
+    fun provideMoshi(): Moshi {
+        return Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(moshi: Moshi): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(
-                MoshiConverterFactory.create(
-                    Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-                )
-            )
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
-            .create(UnsplashApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUnsplashApi(retrofit: Retrofit): UnsplashApi {
+        return retrofit.create(UnsplashApi::class.java)
     }
 
     @Provides

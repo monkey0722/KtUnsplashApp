@@ -50,36 +50,45 @@ fun PhotoThumbnail(
                 .background(Color.Black.copy(alpha = 0.5f))
                 .padding(10.dp),
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(0.8f),
-            ) {
-                Text(
-                    text = photo.description ?: "No description",
-                    color = Color.White,
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-                Text(
-                    text = photo.photographer ?: "Unknown photographer",
-                    color = Color.White,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-            }
+            PhotoDescriptionColumn(photo)
             Spacer(modifier = Modifier.weight(1f))
-
-            Icon(
-                imageVector = Icons.Default.Favorite,
-                contentDescription = "likes",
-                tint = Color.Magenta
-            )
-            Spacer(modifier = Modifier.width(5.dp))
-
-            Text(
-                text = photo.likes.toString(),
-                color = Color.White,
-                style = MaterialTheme.typography.bodyLarge
-            )
+            IconAndLikes(photo)
         }
     }
+}
+
+@Composable
+fun PhotoDescriptionColumn(photo: Photo) {
+    Column(
+        modifier = Modifier.fillMaxWidth(0.8f),
+    ) {
+        Text(
+            text = photo.description ?: "No description",
+            color = Color.White,
+            style = MaterialTheme.typography.bodyLarge,
+        )
+        Text(
+            text = photo.photographer ?: "Unknown photographer",
+            color = Color.White,
+            style = MaterialTheme.typography.bodyMedium,
+        )
+    }
+}
+
+@Composable
+fun IconAndLikes(photo: Photo) {
+    Icon(
+        imageVector = Icons.Default.Favorite,
+        contentDescription = "likes",
+        tint = Color.Magenta
+    )
+    Spacer(modifier = Modifier.width(5.dp))
+
+    Text(
+        text = photo.likes.toString(),
+        color = Color.White,
+        style = MaterialTheme.typography.bodyLarge
+    )
 }
 
 @Preview

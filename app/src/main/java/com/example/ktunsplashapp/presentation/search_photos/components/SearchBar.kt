@@ -14,15 +14,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -35,43 +31,45 @@ fun SearchBar(
     onDone: () -> Unit,
     placeholderText: String = "Search...",
 ) {
-    var showClearButton by remember { mutableStateOf(false) }
+    val showClearButton = searchText.isNotEmpty()
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
     TopAppBar(title = {
         OutlinedTextField(
             value = searchText,
-            onValueChange = onSearchTextChanged,
+            onValueChange = {
+                onSearchTextChanged(it)
+                if (it.isEmpty()) {
+                    keyboardController?.hide()
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 2.dp)
-                .onFocusChanged { focusState ->
-                    showClearButton = focusState.isFocused
-                }
                 .focusRequester(focusRequester),
-            placeholder = {
-                Text(text = placeholderText)
-            },
+            placeholder = { Text(text = placeholderText) },
             trailingIcon = {
-                IconButton(onClick = { onSearchTextChanged("") }) {
-                    Icon(
-                        imageVector = Icons.Filled.Close,
-                        contentDescription = "close",
-                    )
+                if (showClearButton) {
+                    IconButton(onClick = { onSearchTextChanged("") }) {
+                        Icon(
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = "clear"
+                        )
+                    }
                 }
             },
             maxLines = 1,
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = {
-                keyboardController?.hide()
                 onDone()
+                keyboardController?.hide()
             })
         )
     })
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(key1 = searchText) {
         focusRequester.requestFocus()
     }
 }

@@ -10,8 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.ktunsplashapp.presentation.search_photos.SearchPhotosScreen
 import com.example.ktunsplashapp.presentation.ui.theme.KtUnsplashAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +31,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = ScreenRoutes.SearchPhotosScreen.route
                     ) {
                         composable(route = ScreenRoutes.SearchPhotosScreen.route) {
-                            // ToDo
+                            SearchPhotosScreen()
                         }
                         composable(route = ScreenRoutes.PhotoDetailScreen.route) {
                             // ToDo

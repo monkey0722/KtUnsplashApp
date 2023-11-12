@@ -30,6 +30,7 @@ android {
             }
         }
         buildConfigField("String", "API_KEY", "\"${localProperties["api_key"]}\"")
+        buildConfigField("String", "BASE_URL", "\"${localProperties["base_url"]}\"")
     }
 
     buildTypes {
@@ -89,6 +90,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
     implementation("com.squareup.moshi:moshi:1.14.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
 
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
@@ -96,4 +98,6 @@ dependencies {
 
     val nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 }

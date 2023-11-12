@@ -20,20 +20,20 @@ class SearchPhotosViewModel @Inject constructor(
     private val _state = mutableStateOf(SearchPhotosState())
     val state: State<SearchPhotosState> = _state
 
-    private var _query by mutableStateOf("programming")
+    private var _query by mutableStateOf("Tokyo")
     val query: String get() = _query
 
     init {
-        searchPhotos(_query)
+        searchPhotos()
     }
 
     fun onQueryChanged(queryString: String) {
         _query = queryString
     }
 
-    fun searchPhotos(query: String) {
+    fun searchPhotos() {
         _state.value = SearchPhotosState(isLoading = true)
-        searchPhotosUseCase(query).onEach { result ->
+        searchPhotosUseCase(_query).onEach { result ->
             _state.value = when (result) {
                 is NetworkResponse.Success -> {
                     SearchPhotosState(

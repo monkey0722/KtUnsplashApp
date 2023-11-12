@@ -20,9 +20,9 @@ fun SearchPhotosScreen(
     Scaffold(
         topBar = {
             SearchBar(
-                searchText = "",
-                onSearchTextChanged =  {},
-                onDone = {}
+                searchText = viewModel.query,
+                onSearchTextChanged = { viewModel.onQueryChanged(it) },
+                onDone = { viewModel.searchPhotos() }
             )
         }
     ) { paddingValue ->

@@ -31,9 +31,9 @@ class MainActivity : ComponentActivity() {
                         startDestination = ScreenRoutes.SearchPhotosScreen.route
                     ) {
                         composable(route = ScreenRoutes.SearchPhotosScreen.route) {
-                            SearchPhotosScreen()
+                            SearchPhotosScreen(navController)
                         }
-                        composable(route = ScreenRoutes.PhotoDetailScreen.route) {
+                        composable(route = ScreenRoutes.PhotoDetailScreen.route + "/{photoId}") {
                             // ToDo
                         }
                     }

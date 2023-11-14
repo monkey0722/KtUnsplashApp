@@ -9,11 +9,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.ktunsplashapp.domain.models.Photo
+import com.example.ktunsplashapp.presentation.components.CountLabel
 import com.example.ktunsplashapp.presentation.ui.theme.KtUnsplashAppTheme
 
 @Composable
@@ -52,7 +51,13 @@ fun PhotoThumbnail(
         ) {
             PhotoDescriptionColumn(photo)
             Spacer(modifier = Modifier.weight(1f))
-            IconAndLikes(photo)
+            CountLabel(
+                imageVector = Icons.Default.Favorite,
+                count = photo.likes ?: 0,
+                iconTint = Color.Magenta,
+                contentDescription = "likes",
+                color = Color.White,
+            )
         }
     }
 }
@@ -73,22 +78,6 @@ fun PhotoDescriptionColumn(photo: Photo) {
             style = MaterialTheme.typography.bodyMedium,
         )
     }
-}
-
-@Composable
-fun IconAndLikes(photo: Photo) {
-    Icon(
-        imageVector = Icons.Default.Favorite,
-        contentDescription = "likes",
-        tint = Color.Magenta
-    )
-    Spacer(modifier = Modifier.width(5.dp))
-
-    Text(
-        text = photo.likes.toString(),
-        color = Color.White,
-        style = MaterialTheme.typography.bodyLarge
-    )
 }
 
 @Preview

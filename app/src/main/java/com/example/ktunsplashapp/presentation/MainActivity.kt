@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.ktunsplashapp.presentation.photo_detail.PhotoDetailScreen
 import com.example.ktunsplashapp.presentation.search_photos.SearchPhotosScreen
 import com.example.ktunsplashapp.presentation.ui.theme.KtUnsplashAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
                             SearchPhotosScreen(navController)
                         }
                         composable(route = ScreenRoutes.PhotoDetailScreen.route + "/{photoId}") {
-                            // ToDo
+                            PhotoDetailScreen()
                         }
                     }
                 }

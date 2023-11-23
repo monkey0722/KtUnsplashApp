@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
+import com.example.ktunsplashapp.presentation.ui.theme.Dimensions
 
 @Composable
 fun CountLabel(
@@ -28,7 +28,7 @@ fun CountLabel(
             contentDescription = contentDescription,
             tint = iconTint,
         )
-        Spacer(modifier = Modifier.width(5.dp))
+        Spacer(modifier = Modifier.width(Dimensions.Space4))
         Text(
             text = count.toString(),
             color = color,

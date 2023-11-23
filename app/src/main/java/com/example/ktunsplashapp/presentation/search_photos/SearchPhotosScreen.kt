@@ -13,12 +13,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.ktunsplashapp.presentation.ScreenRoutes
 import com.example.ktunsplashapp.presentation.search_photos.components.PhotoThumbnail
 import com.example.ktunsplashapp.presentation.search_photos.components.SearchBar
+import com.example.ktunsplashapp.presentation.ui.theme.Dimensions
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,7 +44,7 @@ fun SearchPhotosScreen(
                 !state.error.isNullOrBlank() -> {
                     Text(
                         text = state.error,
-                        modifier = Modifier.align(Alignment.Center).padding(16.dp),
+                        modifier = Modifier.align(Alignment.Center).padding(Dimensions.Space16),
                         color = MaterialTheme.colorScheme.error,
                     )
                 }

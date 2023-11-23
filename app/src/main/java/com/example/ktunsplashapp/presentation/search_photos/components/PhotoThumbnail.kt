@@ -19,10 +19,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.ktunsplashapp.domain.models.Photo
 import com.example.ktunsplashapp.presentation.components.CountLabel
+import com.example.ktunsplashapp.presentation.ui.theme.Dimensions
 import com.example.ktunsplashapp.presentation.ui.theme.KtUnsplashAppTheme
 
 @Composable
@@ -33,7 +33,7 @@ fun PhotoThumbnail(
     Box(
         modifier = Modifier
             .background(Color.Black)
-            .heightIn(min = 200.dp)
+            .heightIn(min = Dimensions.Space200)
             .clickable { onClick(photo) },
         contentAlignment = Alignment.BottomCenter,
     ) {
@@ -47,7 +47,7 @@ fun PhotoThumbnail(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color.Black.copy(alpha = 0.5f))
-                .padding(10.dp),
+                .padding(Dimensions.Space8),
         ) {
             PhotoDescriptionColumn(photo)
             Spacer(modifier = Modifier.weight(1f))

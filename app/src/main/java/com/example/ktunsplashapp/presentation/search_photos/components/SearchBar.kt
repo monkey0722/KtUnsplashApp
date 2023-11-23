@@ -21,7 +21,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.dp
+import com.example.ktunsplashapp.presentation.ui.theme.Dimensions
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -46,7 +46,7 @@ fun SearchBar(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 2.dp)
+                .padding(vertical = Dimensions.Space2)
                 .focusRequester(focusRequester),
             placeholder = { Text(text = placeholderText) },
             trailingIcon = {

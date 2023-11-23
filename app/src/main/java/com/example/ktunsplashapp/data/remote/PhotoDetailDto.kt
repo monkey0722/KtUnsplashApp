@@ -1,6 +1,5 @@
 package com.example.ktunsplashapp.data.remote
 
-
 import com.example.ktunsplashapp.domain.models.PhotoDetail
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -31,7 +30,7 @@ data class PhotoDetailDto(
     val updatedAt: String?,
     val urls: UrlsX?,
     val user: UserX?,
-    val width: Int?
+    val width: Int?,
 )
 
 fun PhotoDetailDto.toPhotoDetail(): PhotoDetail {
@@ -44,6 +43,6 @@ fun PhotoDetailDto.toPhotoDetail(): PhotoDetail {
         photographer = user?.username,
         camera = exif?.name,
         location = locationText.ifEmpty { null },
-        downloads = downloads
+        downloads = downloads,
     )
 }

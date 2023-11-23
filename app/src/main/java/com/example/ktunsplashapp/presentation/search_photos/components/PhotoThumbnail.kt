@@ -31,10 +31,11 @@ fun PhotoThumbnail(
     onClick: (Photo) -> Unit,
 ) {
     Box(
-        modifier = Modifier
-            .background(Color.Black)
-            .heightIn(min = Dimensions.Space200)
-            .clickable { onClick(photo) },
+        modifier =
+            Modifier
+                .background(Color.Black)
+                .heightIn(min = Dimensions.Space200)
+                .clickable { onClick(photo) },
         contentAlignment = Alignment.BottomCenter,
     ) {
         CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
@@ -44,10 +45,11 @@ fun PhotoThumbnail(
             modifier = Modifier.fillMaxWidth(),
         )
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.Black.copy(alpha = 0.5f))
-                .padding(Dimensions.Space8),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(Color.Black.copy(alpha = 0.5f))
+                    .padding(Dimensions.Space8),
         ) {
             PhotoDescriptionColumn(photo)
             Spacer(modifier = Modifier.weight(1f))
@@ -83,13 +85,14 @@ fun PhotoDescriptionColumn(photo: Photo) {
 @Preview
 @Composable
 private fun PhotoThumbnailPreview() {
-    val photo = Photo(
-        photoId = "",
-        description = "Image description",
-        likes = 300,
-        imageUrl = "https://images.unsplash.com/photo-1665686377065-08ba896d16fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60",
-        photographer = "Surface",
-    )
+    val photo =
+        Photo(
+            photoId = "",
+            description = "Image description",
+            likes = 300,
+            imageUrl = "https://images.unsplash.com/photo-1665686377065-08ba896d16fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60",
+            photographer = "Surface",
+        )
     KtUnsplashAppTheme {
         PhotoThumbnail(photo = photo, onClick = {})
     }

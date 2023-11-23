@@ -32,9 +32,9 @@ fun SearchPhotosScreen(
             SearchBar(
                 searchText = viewModel.query,
                 onSearchTextChanged = { viewModel.onQueryChanged(it) },
-                onDone = { viewModel.searchPhotos() }
+                onDone = { viewModel.searchPhotos() },
             )
-        }
+        },
     ) { paddingValue ->
         Box(modifier = Modifier.fillMaxSize()) {
             when {
@@ -55,7 +55,7 @@ fun SearchPhotosScreen(
                                 photo = photo,
                                 onClick = {
                                     navController.navigate(ScreenRoutes.PhotoDetailScreen.route + "/${photo.photoId}")
-                                }
+                                },
                             )
                         }
                     }

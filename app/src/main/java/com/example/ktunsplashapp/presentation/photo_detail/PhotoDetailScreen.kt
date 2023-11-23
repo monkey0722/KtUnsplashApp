@@ -33,9 +33,7 @@ import com.example.ktunsplashapp.presentation.components.CountLabel
 import com.example.ktunsplashapp.presentation.ui.theme.Dimensions
 
 @Composable
-fun PhotoDetailScreen(
-    viewModel: PhotoDetailViewModel = hiltViewModel(),
-) {
+fun PhotoDetailScreen(viewModel: PhotoDetailViewModel = hiltViewModel()) {
     val state = viewModel.state.value
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -62,7 +60,7 @@ fun PhotoDetailScreen(
 @Composable
 fun PhotoDetailContent(photoDetail: PhotoDetail) {
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        LoadingImage(photoDetail.imageUrl,photoDetail.description)
+        LoadingImage(photoDetail.imageUrl, photoDetail.description)
 
         Column(modifier = Modifier.padding(Dimensions.Space16)) {
             Text(
@@ -98,7 +96,10 @@ fun PhotoDetailContent(photoDetail: PhotoDetail) {
 }
 
 @Composable
-fun LoadingImage(imageUrl: String, contentDescription: String?) {
+fun LoadingImage(
+    imageUrl: String,
+    contentDescription: String?,
+) {
     Box(modifier = Modifier.heightIn(min = Dimensions.Space200)) {
         var isLoadingImage by remember { mutableStateOf(true) }
         if (isLoadingImage) {
@@ -109,16 +110,17 @@ fun LoadingImage(imageUrl: String, contentDescription: String?) {
         AsyncImage(
             model = imageUrl,
             contentDescription = contentDescription,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(
-                    RoundedCornerShape(
-                        topStartPercent = 0,
-                        topEndPercent = 0,
-                        bottomEndPercent = 5,
-                        bottomStartPercent = 5,
-                    )
-                ),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .clip(
+                        RoundedCornerShape(
+                            topStartPercent = 0,
+                            topEndPercent = 0,
+                            bottomEndPercent = 5,
+                            bottomStartPercent = 5,
+                        ),
+                    ),
             onSuccess = { isLoadingImage = false },
         )
     }

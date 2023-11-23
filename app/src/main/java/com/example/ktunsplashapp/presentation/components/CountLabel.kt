@@ -20,7 +20,7 @@ fun CountLabel(
     iconTint: Color,
     contentDescription: String,
     modifier: Modifier = Modifier,
-    color: Color = LocalContentColor.current.copy(alpha = LocalContentColor.current.alpha)
+    color: Color = LocalContentColor.current.copy(alpha = LocalContentColor.current.alpha),
 ) {
     Row(modifier = modifier) {
         Icon(

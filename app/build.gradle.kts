@@ -7,6 +7,8 @@ plugins {
     id("com.google.dagger.hilt.android")
 }
 
+apply(from = "ktlint.gradle.kts")
+
 android {
     namespace = "com.example.ktunsplashapp"
     compileSdk = 34
@@ -23,12 +25,13 @@ android {
             useSupportLibrary = true
         }
 
-        val localProperties = Properties().apply {
-            val localPropertiesFile = rootProject.file("local.properties")
-            if (localPropertiesFile.exists()) {
-                load(localPropertiesFile.inputStream())
+        val localProperties =
+            Properties().apply {
+                val localPropertiesFile = rootProject.file("local.properties")
+                if (localPropertiesFile.exists()) {
+                    load(localPropertiesFile.inputStream())
+                }
             }
-        }
         buildConfigField("String", "API_KEY", "\"${localProperties["api_key"]}\"")
         buildConfigField("String", "BASE_URL", "\"${localProperties["base_url"]}\"")
     }
@@ -38,7 +41,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }

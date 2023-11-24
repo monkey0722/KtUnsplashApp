@@ -13,33 +13,34 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class PhotoDetailViewModel @Inject constructor(
-    private val getPhotoDetailUseCase: GetPhotoDetailUseCase,
-    savedStateHandle: SavedStateHandle,
-) : ViewModel() {
-    private val _state = mutableStateOf(PhotoDetailState())
-    val state: State<PhotoDetailState> = _state
+class PhotoDetailViewModel
+    @Inject
+    constructor(
+        private val getPhotoDetailUseCase: GetPhotoDetailUseCase,
+        savedStateHandle: SavedStateHandle,
+    ) : ViewModel() {
+        private val _state = mutableStateOf(PhotoDetailState())
+        val state: State<PhotoDetailState> = _state
 
-    init {
-        savedStateHandle.get<String>("photoId")?.let { photoId ->
-            getPhotoDetail(photoId)
+        init {
+            savedStateHandle.get<String>("photoId")?.let { photoId ->
+                getPhotoDetail(photoId)
+            }
+        }
+
+        private fun getPhotoDetail(photoId: String) {
+            getPhotoDetailUseCase(photoId).onEach { result ->
+                when (result) {
+                    is NetworkResponse.Success -> {
+                        _state.value = PhotoDetailState(photoDetail = result.data, isLoading = false)
+                    }
+                    is NetworkResponse.Failure -> {
+                        _state.value = PhotoDetailState(error = result.error, isLoading = false)
+                    }
+                    is NetworkResponse.Loading -> {
+                        _state.value = PhotoDetailState(isLoading = true)
+                    }
+                }
+            }.launchIn(viewModelScope)
         }
     }
-
-    private fun getPhotoDetail(photoId: String) {
-        getPhotoDetailUseCase(photoId).onEach { result ->
-            when (result) {
-                is NetworkResponse.Success -> {
-                    _state.value = PhotoDetailState(photoDetail = result.data, isLoading = false)
-                }
-                is NetworkResponse.Failure -> {
-                    _state.value = PhotoDetailState(error = result.error, isLoading = false)
-                }
-                is NetworkResponse.Loading -> {
-                    _state.value = PhotoDetailState(isLoading = true)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-}
-

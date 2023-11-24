@@ -26,16 +26,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.ktunsplashapp.domain.models.PhotoDetail
 import com.example.ktunsplashapp.presentation.components.CountLabel
+import com.example.ktunsplashapp.presentation.ui.theme.Dimensions
 
 @Composable
-fun PhotoDetailScreen(
-    viewModel: PhotoDetailViewModel = hiltViewModel(),
-) {
+fun PhotoDetailScreen(viewModel: PhotoDetailViewModel = hiltViewModel()) {
     val state = viewModel.state.value
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -62,20 +60,20 @@ fun PhotoDetailScreen(
 @Composable
 fun PhotoDetailContent(photoDetail: PhotoDetail) {
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        LoadingImage(photoDetail.imageUrl,photoDetail.description)
+        LoadingImage(photoDetail.imageUrl, photoDetail.description)
 
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(Dimensions.Space16)) {
             Text(
                 text = photoDetail.description ?: "No description",
                 style = MaterialTheme.typography.headlineSmall,
             )
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(Dimensions.Space20))
 
             Text(
                 text = photoDetail.photographer ?: "Unknown photographer",
                 style = MaterialTheme.typography.bodyMedium,
             )
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(Dimensions.Space20))
 
             CountLabel(
                 imageVector = Icons.Default.Favorite,
@@ -89,7 +87,7 @@ fun PhotoDetailContent(photoDetail: PhotoDetail) {
                 iconTint = Color.Green,
                 contentDescription = "Share",
             )
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(Dimensions.Space20))
 
             Text(text = "Camera: ${photoDetail.camera}")
             Text(text = "Location: ${photoDetail.location}")
@@ -98,8 +96,11 @@ fun PhotoDetailContent(photoDetail: PhotoDetail) {
 }
 
 @Composable
-fun LoadingImage(imageUrl: String, contentDescription: String?) {
-    Box(modifier = Modifier.heightIn(min = 200.dp)) {
+fun LoadingImage(
+    imageUrl: String,
+    contentDescription: String?,
+) {
+    Box(modifier = Modifier.heightIn(min = Dimensions.Space200)) {
         var isLoadingImage by remember { mutableStateOf(true) }
         if (isLoadingImage) {
             CircularProgressIndicator(
@@ -109,16 +110,17 @@ fun LoadingImage(imageUrl: String, contentDescription: String?) {
         AsyncImage(
             model = imageUrl,
             contentDescription = contentDescription,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(
-                    RoundedCornerShape(
-                        topStartPercent = 0,
-                        topEndPercent = 0,
-                        bottomEndPercent = 5,
-                        bottomStartPercent = 5,
-                    )
-                ),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .clip(
+                        RoundedCornerShape(
+                            topStartPercent = 0,
+                            topEndPercent = 0,
+                            bottomEndPercent = 5,
+                            bottomStartPercent = 5,
+                        ),
+                    ),
             onSuccess = { isLoadingImage = false },
         )
     }

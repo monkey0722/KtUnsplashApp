@@ -21,7 +21,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.dp
+import com.example.ktunsplashapp.presentation.ui.theme.Dimensions
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -44,17 +44,18 @@ fun SearchBar(
                     keyboardController?.hide()
                 }
             },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 2.dp)
-                .focusRequester(focusRequester),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = Dimensions.Space2)
+                    .focusRequester(focusRequester),
             placeholder = { Text(text = placeholderText) },
             trailingIcon = {
                 if (showClearButton) {
                     IconButton(onClick = { onSearchTextChanged("") }) {
                         Icon(
                             imageVector = Icons.Filled.Close,
-                            contentDescription = "clear"
+                            contentDescription = "clear",
                         )
                     }
                 }
@@ -62,10 +63,11 @@ fun SearchBar(
             maxLines = 1,
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(onDone = {
-                onDone()
-                keyboardController?.hide()
-            })
+            keyboardActions =
+                KeyboardActions(onDone = {
+                    onDone()
+                    keyboardController?.hide()
+                }),
         )
     })
 

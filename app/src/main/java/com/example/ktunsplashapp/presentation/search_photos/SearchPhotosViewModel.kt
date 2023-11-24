@@ -14,43 +14,46 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchPhotosViewModel @Inject constructor(
-    private val searchPhotosUseCase: SearchPhotosUseCase,
-) : ViewModel() {
-    private val _state = mutableStateOf(SearchPhotosState())
-    val state: State<SearchPhotosState> = _state
+class SearchPhotosViewModel
+    @Inject
+    constructor(
+        private val searchPhotosUseCase: SearchPhotosUseCase,
+    ) : ViewModel() {
+        private val _state = mutableStateOf(SearchPhotosState())
+        val state: State<SearchPhotosState> = _state
 
-    private var _query by mutableStateOf("Tokyo")
-    val query: String get() = _query
+        private var _query by mutableStateOf("Tokyo")
+        val query: String get() = _query
 
-    init {
-        searchPhotos()
+        init {
+            searchPhotos()
+        }
+
+        fun onQueryChanged(queryString: String) {
+            _query = queryString
+        }
+
+        fun searchPhotos() {
+            _state.value = SearchPhotosState(isLoading = true)
+            searchPhotosUseCase(_query).onEach { result ->
+                _state.value =
+                    when (result) {
+                        is NetworkResponse.Success -> {
+                            SearchPhotosState(
+                                isLoading = false,
+                                photos = result.data ?: emptyList(),
+                            )
+                        }
+                        is NetworkResponse.Failure -> {
+                            SearchPhotosState(
+                                isLoading = false,
+                                error = result.error ?: "An unexpected error occurred",
+                            )
+                        }
+                        is NetworkResponse.Loading -> {
+                            SearchPhotosState(isLoading = true)
+                        }
+                    }
+            }.launchIn(viewModelScope)
+        }
     }
-
-    fun onQueryChanged(queryString: String) {
-        _query = queryString
-    }
-
-    fun searchPhotos() {
-        _state.value = SearchPhotosState(isLoading = true)
-        searchPhotosUseCase(_query).onEach { result ->
-            _state.value = when (result) {
-                is NetworkResponse.Success -> {
-                    SearchPhotosState(
-                        isLoading = false,
-                        photos = result.data ?: emptyList()
-                    )
-                }
-                is NetworkResponse.Failure -> {
-                    SearchPhotosState(
-                        isLoading = false,
-                        error = result.error ?: "An unexpected error occurred"
-                    )
-                }
-                is NetworkResponse.Loading -> {
-                    SearchPhotosState(isLoading = true)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-}
